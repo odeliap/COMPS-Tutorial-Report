@@ -1,0 +1,82 @@
+\documentclass[10pt,twocolumn]{article} 
+
+% use the oxycomps style file
+\usepackage{oxycomps}
+
+% use hyperref package
+\usepackage{hyperref}
+
+% user package from including pdf
+\usepackage{pdfpages}
+
+% read references.bib for the bibtex data
+\bibliography{references}
+
+% include metadata in the generated pdf file
+\pdfinfo{
+    /Title (The Occidental Computer Science Comprehensive Project: Tutorial)
+    /Author (Odelia Putterman)
+}
+
+% set the title and author information
+\title{The Occidental Computer Science Comprehensive Project: \\ Tutorial Report}
+\author{Odelia Putterman}
+\affiliation{Occidental College}
+\email{putterman@oxy.edu}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    This report documents the tutorial completed as part of my Occidental College Computer Science Comprehensive Project: Predicting Cryptocurrency Prices for Stock Trading Using Machine Learning. This report has four components: methods, evaluation, discussion, and software documentation. For each component, we include a section. This report walks us through the tutorial followed, \href{https://www.youtube.com/watch?v=4OlvGGAsj8I}{Stock Market Sentiment Analysis Using Python \& Machine Learning (Youtube tutorial)}, reviewing the key concepts and learned information relevant to the comprehensive project.
+\end{abstract}
+
+\section{Methods}
+
+This section is a walk-through of the methods implored in this tutorial in a numbered list. We detail the steps below.
+
+\begin{enumerate}
+    \item Install \textit{vaderSentiment} with pip to get access to sentiment analysis tools.
+    \item Load necessary libraries for this tutorial. These are:
+    \begin{itemize}
+        \item pandas;
+        \item numpy;
+        \item textblob.TextBlob;
+        \item re;
+        \item vaderSentiment.SentimentIntensityAnalyzer;
+        \item sklearn.model\_selection.train\_test\_split;
+        \item sklearn.metrics.accuracy\_score;
+        \item sklearn.metrics.classification\_report; and
+        \item sklearn.discriminant\_analysis.LinearDiscriminantAnalysis.
+    \end{itemize}
+    \item Load the data. In this tutorial, we used two data sets: \textit{Dow\_Jones\_Industrial\_Average\_News.csv} and \textit{Dow\_Jones\_Industrial\_Average\_Stock.csv}, all originating from the Dow Jones data and downloaded from Kaggle.
+    \item Next, we merged the two data sets on the 'Date' field to create one consolidated file.
+    \item To prepare the data for sentiment analysis, we grabbed the \textit{news} data set inputs, consolidated them into one joint string for each date, and cleaned the data by removing certain unnecessary string patterns, storing this processed data in a new list and adding it to our consolidated csv.
+    \item Next, we created functions to get the subjectivity and polarity of text using \textbf{TextBlob(text).sentiment.subjectivity} and \textbf{TextBlob(text).sentiment.polarity}, where \textbf{text} is replaced with the actual text to analyze.
+    \item We used these newly created functions to create a subjectivity and polarity column, with inputs as the subjectivity and polarity outputs from these functions on each line of 'Combined\_News' (the cleaned news string).
+    \item Next, we made a function to get the sentiment scores called \textbf{getSIA}. Using this function, we got the sentiment scores for each date, creating a new column in the combined csv for each of: 'combined', 'negative', 'neutral', and 'positive', where each is a value between -1 and 1.
+    \item We cleaned our combined csv to keep only the necessary columns: 'Open', 'High', 'Low', 'Volume', 'Subjectivity', 'Polarity', 'Compound', 'Negative', 'Neutral', 'Positive', and 'Label'.
+    \item We split this cleaned combined csv into two data frames, one for the 'input' data (everything but the 'Label' column) and one for the target data (the 'Label' columns).
+    \item Using \textbf{train\_test\_split}, we split the data into 80 percent and 20 percent to train and test the data.
+    \item Using the train data, we trained a \textbf{LinearDiscriminantAnalysis()} model.
+    \item And, finally, we got the model predictions for the test data and compared between these predictions and the labeled data to get the precision, recall, f1-score, and support.
+\end{enumerate}
+
+
+\section{Evaluation}
+
+This tutorial evaluated its outputted results by comparing the predicted stock prices produced from the trained model with the actual stock prices from that same period. This found to produce a precision rate over 80\%. Other measures besides precision were accounted for as well, including recall, f1-score, and support, all showing very promising results.
+
+\section{Discussion}
+
+This tutorial walked me through how to predict stock prices (whether they will increase or decrease) with sentiment analysis based on top news headlines. The whole process was so seamless and straight-forward it boosted my confidence in my ability to carry-out this project tremendously. While it showed the ease with which sentiment analysis and model building can be done using pre-built libraries, it did not cover the complexity involved with sourcing data, as these data sets were simply provided in a form which was easy to work with. That said, data processing was covered, which is essential to the success of the model.
+
+\section{Software Documentation}
+
+See attached \textbf{stock\_market\_tutorial.pdf} file for the code from this tutorial.
+
+
+\printbibliography 
+
+\end{document}
